@@ -207,15 +207,11 @@ def blocking_heuristic(board):
     if goal_x == 4:
         return 0
 
-    # table = __board_to_table__(board)
-    # for i in range(goal_car.var_coord + goal_car.length, 6):
-    #     if table[i][2] == 1:
-    #         count += 1
     for car in board.cars:
         if car.orientation == 'h' and car.fix_coord == 2 and car.var_coord > goal_x:
             count = count + 1
         elif car.orientation == 'v' and car.fix_coord > goal_x + goal_car.length - 1 and \
-                car.var_coord <= 2 and car.var_coord + car.length >= 2:
+                car.var_coord <= 2 and car.var_coord + car.length - 1 >= 2:
             count = count + 1
 
     return count
@@ -246,7 +242,7 @@ def advanced_heuristic(board):
             count = count + 1
         # blocked by a vertical car
         elif car.orientation == 'v' and car.fix_coord > goal_x + goal_car.length - 1 and \
-                car.var_coord <= 2 and car.var_coord + car.length >= 2:
+                car.var_coord <= 2 and car.var_coord + car.length - 1 >= 2:
             count = count + 1
 
             if not deep_blocked:
@@ -279,54 +275,47 @@ def advanced_heuristic(board):
 
     return count
 
-import time
-from os import system, name
-
-boards = from_file("jams_posted.txt")
-board = boards[3]
-board.display()
-
-# listOfState = dfs(board)
+#
+# import time
+# from os import system, name
+#
+# boards = from_file("jams_posted.txt")
+# board = boards[3]
+# board.display()
+#
+#
+# listOfState = a_star(board, blocking_heuristic)
+#
+# listOfState2 = a_star(board, advanced_heuristic)
+#
+# print(len(listOfState2[0]))
 # for state in listOfState[0]:
 #     state.board.display()
 
-
-# start=time.time()
-# listOfState = a_star(board, blocking_heuristic)
-# end=time.time()
-
-# start2=time.time()
-# listOfState2 = a_star(board, advanced_heuristic)
-# end2=time.time()
-
-# print(len(listOfState))
-# for state in listOfState:
-#     state.board.display()
-
-
+#
 # print(len(listOfState2))
 
 # results = [[], [], [], [],[],[],[],[]]
 # for i in range(40):
 #     print("problem: ", i, "==========================================")
 #     board = boards[i]
-
-#     start=time.time()
+#
 #     listOfState = a_star(board, blocking_heuristic)
-#     end=time.time()
-
-#     start2=time.time()
+#
 #     listOfState2 = a_star(board, advanced_heuristic)
-#     end2=time.time()
-
-#     results[0].append(len(listOfState[0]))
-#     results[1].append(len(listOfState2[0]))
+#
+#     ls1 = []
+#     ls2 = []
+#     for state in listOfState[0]:
+#         ls1.append(state.id)
+#     for state in listOfState2[0]:
+#         ls2.append(state.id)
+#
+#     results[0].append(ls1)
+#     results[1].append(ls2)
 #     results[2].append(listOfState[1])
 #     results[3].append(listOfState2[1])
-#     results[4].append(listOfState[2])
-#     results[5].append(listOfState2[2])
-#     results[6].append(end-start)
-#     results[7].append(end2-start2)
-
-
+#     break
+#
+#
 # print(results)
